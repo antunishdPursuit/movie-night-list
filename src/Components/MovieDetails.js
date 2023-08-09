@@ -41,6 +41,7 @@ function MoviesDetails() {
           <li className="list-group-item"><span className="fw-bold">rotten_tomato_score: </span>{movie.rotten_tomato_score}</li>
           <li className="list-group-item"><span className="fw-bold">release_date: </span>{movie.release_date}</li>
           <li className="list-group-item"><span className="fw-bold">runtime: </span>{movie.runtime}</li>
+          <li className="list-group-item"><span className="fw-bold">has_watched: </span>{movie.has_watched ? "yes" : "no"}</li>
           <li className="list-group-item"><span className="fw-bold">poster: </span><img src={movie.poster} alt={movie.title}></img></li>
         </ul>
         <div>
