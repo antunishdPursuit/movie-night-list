@@ -25,23 +25,25 @@ function MoviesDetails() {
       .then(() => {
         navigate(`/movies`);
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e)
+      });
   };
 
-    return (
-      <div className="row justify-content-md-center">
-        <div className="col-md-auto">
-          <h1>Movie Details</h1>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item"><span className="fw-bold">title: </span>{movie.title}</li>
-            <li className="list-group-item"><span className="fw-bold">director: </span>{movie.director}</li>
-            <li className="list-group-item"><span className="fw-bold">genre: </span>{movie.genre}</li>
-            <li className="list-group-item"><span className="fw-bold">rotten_tomato_score: </span>{movie.rotten_tomato_score}</li>
-            <li className="list-group-item"><span className="fw-bold">release_date: </span>{movie.release_date}</li>
-            <li className="list-group-item"><span className="fw-bold">runtime: </span>{movie.runtime}</li>
-            <li className="list-group-item"><span className="fw-bold">poster: </span><img src={movie.poster} alt={movie.title}></img></li>
-          </ul>
-          <div>
+  return (
+    <div className="row justify-content-md-center">
+      <div className="col-md-auto">
+        <h1>Movie Details</h1>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item"><span className="fw-bold">title: </span>{movie.title}</li>
+          <li className="list-group-item"><span className="fw-bold">director: </span>{movie.director}</li>
+          <li className="list-group-item"><span className="fw-bold">genre: </span>{movie.genre}</li>
+          <li className="list-group-item"><span className="fw-bold">rotten_tomato_score: </span>{movie.rotten_tomato_score}</li>
+          <li className="list-group-item"><span className="fw-bold">release_date: </span>{movie.release_date}</li>
+          <li className="list-group-item"><span className="fw-bold">runtime: </span>{movie.runtime}</li>
+          <li className="list-group-item"><span className="fw-bold">poster: </span><img src={movie.poster} alt={movie.title}></img></li>
+        </ul>
+        <div>
           {" "}
           <Link to={`/movies`}>
             <button>Back</button>
@@ -54,10 +56,10 @@ function MoviesDetails() {
           </Link>
         </div>
         <button onClick={handleDelete}>Delete</button>
-        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
   
-  export default MoviesDetails;
+export default MoviesDetails;
   
