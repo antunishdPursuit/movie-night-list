@@ -11,3 +11,4 @@ REACT_APP_API_URL=http://localhost:3003
 ```
 
 5. Add .env and .gitignore within the .gitignore file
+6. Added a command to the build script so git log can be seen during netifily build
