@@ -20,12 +20,8 @@ function MoviesDetails() {
   }, [index, navigate, API]);
 
   const handleDelete = () => {
-    // if (confirm("Press a button!")) {
-    //   txt = "You pressed OK!";
-    // } else {
-    //   txt = "You pressed Cancel!";
-    // }
-    axios
+    if (window.confirm("Are you sure you want DELETE this movie?")) {
+      axios
       .delete(`${API}/movies/${index}`)
       .then(() => {
         navigate(`/movies`);
@@ -33,6 +29,10 @@ function MoviesDetails() {
       .catch((e) => {
         console.error(e)
       });
+    } else {
+      console.log("DELETE aborted")
+    }
+
   };
 
   return (
