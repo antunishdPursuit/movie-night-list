@@ -38,7 +38,11 @@ function MoviesNewForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addMovie(movie)
+    if(movie.rotten_tomato_score < 0 || movie.rotten_tomato_score > 101){
+      window.confirm("Rottoen tomato score has to be between 0 to 100")
+    } else {
+      addMovie(movie)
+    }
   };
 
   return (
@@ -90,6 +94,7 @@ function MoviesNewForm() {
             id="has_watched"
             type="checkbox" 
             value={movie.has_watched}
+            checked={movie.has_watched}
             onChange={handleCheckboxChange}
             className="form-check-input" 
             />
@@ -148,11 +153,6 @@ function MoviesNewForm() {
             <label htmlFor="poster">poster:</label>
           </div>
             <br></br>
-          <div className="form-check form-switch">
-            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Default switch checkbox input</label>
-          </div>
-            < br></br>
           <input type="submit" />
         </form>
       </div>

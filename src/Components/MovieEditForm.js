@@ -102,6 +102,7 @@ function MoviesEditForm() {
             id="has_watched"
             type="checkbox" 
             value={movie.has_watched}
+            checked={movie.has_watched}
             onChange={handleCheckboxChange}
             className="form-check-input" 
             />
@@ -158,11 +159,6 @@ function MoviesEditForm() {
             required
             />
             <label htmlFor="poster">poster:</label>
-          </div>
-            <br></br>
-          <div className="form-check form-switch">
-            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Default switch checkbox input</label>
           </div>
             <br></br>
           <input type="submit" />
