@@ -1,0 +1,9 @@
+.list-group-item {
+    border: none;  /* Remove border */
+    padding: 0.25rem 0;  /* Adjust padding */
+  }
+  
+  .list-group-item img {
+    display: block;  /* Remove extra space below image */
+    max-width: 100%;  /* Ensure image fits within the container */
+  }
