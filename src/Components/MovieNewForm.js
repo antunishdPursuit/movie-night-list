@@ -38,7 +38,11 @@ function MoviesNewForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addMovie(movie)
+    if(movie.rotten_tomato_score < 0 || movie.rotten_tomato_score > 101){
+      window.confirm("Rottoen tomato score has to be between 0 to 100")
+    } else {
+      addMovie(movie)
+    }
   };
 
   return (
