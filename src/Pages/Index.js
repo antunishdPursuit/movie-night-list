@@ -1,12 +1,16 @@
 import Movies from "../Components/Movies";
 
+
 function Index() {
     return (
-        <div className="container">
-            <h1>Place holder for Movie Component</h1>
-            <Movies />   
+      <div className="container">
+        <div className="row">
+          <div className="col-auto">
+            <Movies />
+          </div>
         </div>
+      </div>
     );
-}
+  }
 
 export default Index;

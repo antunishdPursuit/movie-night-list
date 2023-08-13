@@ -1,6 +1,7 @@
-import Movie from "./Movie";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Movie from "./Movie";
 
 const API = process.env.REACT_APP_API_URL;
 function Movies() {
@@ -16,13 +17,13 @@ function Movies() {
   }, []);
   
   return (
-    <div className="row justify-content-md-center">
-      <div className="col-md-auto">
-          {movies.map(movie => {
-            return <Movie key={movie.id} movie={movie} />;
-          })}
-      </div>
+    <div className="container align-items-center">
+    <div className="row justify-content-center">
+        {movies.map(movie => {
+          return <Movie key={movie.id} movie={movie} />;
+        })}
     </div>
+  </div>
   );
 }
 
