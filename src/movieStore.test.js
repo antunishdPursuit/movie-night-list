@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 import { listMovies, findMovie, saveMovie, deleteMovie } from './movieStore';
 
 test('local movie lifecycle preserves fields and rejects invalid scores', () => {
