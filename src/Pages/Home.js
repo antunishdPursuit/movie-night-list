@@ -1,22 +1,10 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { listMovies } from "../movieStore";
 import "./Home.css";
 
 
 
-const API = process.env.REACT_APP_API_URL;
 function Home() {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${API}/movies`)
-      .then((response) => {
-        setMovies(response.data);
-      })
-      .catch((e) => {
-        console.error("catch", e);
-      });
-  }, []);
+  const movies = listMovies();
 
   return (
     <div className="container-fluid movie-app">

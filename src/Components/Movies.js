@@ -1,21 +1,8 @@
-
-import { useState, useEffect } from "react";
-import axios from "axios";
 import Movie from "./Movie";
+import { listMovies } from "../movieStore";
 
-const API = process.env.REACT_APP_API_URL;
 function Movies() {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${API}/movies`)
-      .then((response) => {
-          setMovies(response.data)})
-      .catch((e) => {
-        console.error("catch", e)
-      });
-  }, []);
-  
+  const movies = listMovies();
   return (
     <div className="container align-items-center">
     <div className="row justify-content-center">

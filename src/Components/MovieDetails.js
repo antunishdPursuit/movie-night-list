@@ -1,39 +1,14 @@
-import { useState, useEffect } from "react";
 import { useParams,Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { findMovie, deleteMovie } from "../movieStore";
 import "./MovieDetails.css";
 
 function MoviesDetails() {
-  const API = process.env.REACT_APP_API_URL;
-  const [movie, setMovies] = useState([]);
-  let { index } = useParams();
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    axios
-      .get(`${API}/movies/${index}`)
-      .then((response) => {
-        setMovies(response.data);
-      })
-      .catch(() => {
-        navigate("/not-found");
-      });
-  }, [index, navigate, API]);
-
+  const { index } = useParams();
+  const navigate = useNavigate();
+  const movie = findMovie(index);
+  if (!movie) return <p>Movie not found. <Link to="/movies">Back to movies</Link></p>;
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want DELETE this movie?")) {
-      axios
-      .delete(`${API}/movies/${index}`)
-      .then(() => {
-        navigate(`/movies`);
-      })
-      .catch((e) => {
-        console.error(e)
-      });
-    } else {
-      console.log("DELETE aborted")
-    }
-
+    if (window.confirm("Delete this movie from the demo?")) { deleteMovie(index); navigate("/movies"); }
   };
 
   return (
