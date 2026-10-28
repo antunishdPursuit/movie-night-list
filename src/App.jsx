@@ -43,7 +43,7 @@ function Home({ movies }) {
         <div className="home-carousel" role="region" aria-label="Movie poster carousel" aria-roledescription="carousel">
           <div className="home-stage">
             {slides.length > 1 && <div className="home-neighbor home-neighbor-left"><HomeSlide key={slideAt(-1)?.id ?? 'original-left'} movie={slideAt(-1)} decorative /></div>}
-            <div className="home-poster" aria-live="polite" aria-atomic="true">{current ? <Link className="home-poster-link" to={`/movies/${current.id}`} aria-label={`View details for ${current.title}`}><HomeSlide key={current.id} movie={current} /></Link> : <HomeSlide key="original" movie={null} />}</div>
+            <div className="home-poster" aria-live="polite" aria-atomic="true"><Link className="home-poster-link" to={current ? `/movies/${current.id}` : '/movies/the-movies'} aria-label={`View details for ${current ? current.title : 'The Movies'}`}><HomeSlide key={current?.id ?? 'original'} movie={current} /></Link></div>
             {slides.length > 1 && <div className="home-neighbor home-neighbor-right"><HomeSlide key={slideAt(1)?.id ?? 'original-right'} movie={slideAt(1)} decorative /></div>}
             <button className="carousel-control carousel-previous" aria-label="Previous poster" onClick={() => setPosition((currentPosition - 1 + slides.length) % slides.length)}>‹</button>
             <button className="carousel-control carousel-next" aria-label="Next poster" onClick={() => setPosition((currentPosition + 1) % slides.length)}>›</button>
@@ -52,6 +52,10 @@ function Home({ movies }) {
       </div>
     </section>
   );
+}
+function OriginalFlyerDetails() {
+  const flyer = { title: 'The Movies', poster: originalHomeImage };
+  return <section className="page"><Link className="back-link" to="/">Back to Home</Link><div className="detail"><div className="detail-poster"><Poster movie={flyer} /></div><div><h1>The Movies</h1></div></div></section>;
 }
 function Details({ onDelete }) {
   const { index } = useParams(); const navigate = useNavigate(); const movie = findMovie(index);
@@ -72,6 +76,6 @@ function App() {
   const [movies, setMovies] = useState(listMovies);
   const save = (movie, id) => { const saved = saveMovie(movie, id); setMovies(listMovies()); return saved; };
   const remove = id => { deleteMovie(id); setMovies(listMovies()); };
-  return <BrowserRouter><header className="site-header"><div className="header-inner"><Link className="brand" to="/">Movie Night</Link><nav aria-label="Main navigation"><NavLink to="/" end>Home</NavLink><NavLink to="/movies">Movies</NavLink></nav><Link className="button primary header-add" to="/movies/new">Add movie</Link></div></header><main><Routes><Route path="/" element={<Home movies={movies} />} /><Route path="/movies" element={<Library movies={movies} />} /><Route path="/movies/new" element={<MovieForm onSave={save} />} /><Route path="/movies/:index" element={<Details onDelete={remove} />} /><Route path="/movies/:index/edit" element={<MovieForm onSave={save} editing />} /><Route path="*" element={<NotFound />} /></Routes></main></BrowserRouter>;
+  return <BrowserRouter><header className="site-header"><div className="header-inner"><Link className="brand" to="/">Movie Night</Link><nav aria-label="Main navigation"><NavLink to="/" end>Home</NavLink><NavLink to="/movies">Movies</NavLink></nav><Link className="button primary header-add" to="/movies/new">Add movie</Link></div></header><main><Routes><Route path="/" element={<Home movies={movies} />} /><Route path="/movies" element={<Library movies={movies} />} /><Route path="/movies/new" element={<MovieForm onSave={save} />} /><Route path="/movies/the-movies" element={<OriginalFlyerDetails />} /><Route path="/movies/:index" element={<Details onDelete={remove} />} /><Route path="/movies/:index/edit" element={<MovieForm onSave={save} editing />} /><Route path="*" element={<NotFound />} /></Routes></main></BrowserRouter>;
 }
 export default App;
