@@ -22,7 +22,28 @@ function Home({ movies }) {
   const slides = movies.length + 1;
   const currentPosition = position % slides;
   const current = currentPosition === 0 ? null : movies[currentPosition - 1];
-  return <section className="page"><div className="page-heading"><div><h1>Movie Night</h1><p>A collection of movies to watch and remember.</p></div><Link className="button primary" to="/movies">Browse movies</Link></div><div className="featured"><div className="feature-poster">{current ? <Poster key={current.id} movie={current} /> : originalUnavailable ? <div className="poster-fallback" role="img" aria-label="Original Movie Night image unavailable">Movie Night</div> : <img className="poster" src={originalHomeImage} alt="Original Movie Night home image" onError={() => setOriginalUnavailable(true)} />}</div><div>{current && <><h2>{current.title}</h2><p>{current.director} · {current.release_date.slice(0, 4)} · {current.runtime} min</p><p>{current.genre} · {current.rotten_tomato_score}/100 · {current.has_watched ? 'Watched' : 'Not watched'}</p><Link className="button primary" to={`/movies/${current.id}`}>View details</Link></>}<div className="actions"><button onClick={() => setPosition((currentPosition - 1 + slides) % slides)}>Previous</button><button onClick={() => setPosition((currentPosition + 1) % slides)}>Next</button></div></div></div></section>;
+  return (
+    <section className="home-hero" aria-labelledby="home-title">
+      <div className="home-intro">
+        <h1 id="home-title">A place for movie night.</h1>
+        <p>Explore your collection, remember what you watched, and choose what comes next.</p>
+        <Link className="button primary" to="/movies">Browse movies</Link>
+      </div>
+      <div className="home-carousel" role="region" aria-label="Movie poster carousel" aria-roledescription="carousel">
+        <div className="home-stage">
+          <button className="carousel-control" aria-label="Previous poster" onClick={() => setPosition((currentPosition - 1 + slides) % slides)}>‹</button>
+          <div className="home-poster" aria-live="polite" aria-atomic="true">
+            {current ? <Poster key={current.id} movie={current} /> : originalUnavailable ? <div className="poster-fallback" role="img" aria-label="Original Movie Night image unavailable">Movie Night</div> : <img className="poster" src={originalHomeImage} alt="Original Movie Night flyer" onError={() => setOriginalUnavailable(true)} />}
+          </div>
+          <button className="carousel-control" aria-label="Next poster" onClick={() => setPosition((currentPosition + 1) % slides)}>›</button>
+        </div>
+        <div className="home-caption" aria-live="polite" aria-atomic="true">
+          {current ? <><h2>{current.title}</h2><p>{current.director} · {current.release_date.slice(0, 4)} · {current.runtime} min</p><Link to={`/movies/${current.id}`}>View movie details</Link></> : <p>The Movies</p>}
+          <span className="home-progress">{currentPosition + 1} / {slides}</span>
+        </div>
+      </div>
+    </section>
+  );
 }
 function Details({ onDelete }) {
   const { index } = useParams(); const navigate = useNavigate(); const movie = findMovie(index);
