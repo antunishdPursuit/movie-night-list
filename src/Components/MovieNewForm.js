@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-const API = process.env.REACT_APP_API_URL;
+import { saveMovie } from "../movieStore";
 
 function MoviesNewForm() {
   const navigate = useNavigate();
@@ -17,15 +16,8 @@ function MoviesNewForm() {
   });
 
   const addMovie = (newmovie) => {
-    axios
-      .post(`${API}/movies`, newmovie)
-      .then(
-      (res) => {
-      navigate(`/movies`);
-      })
-      .catch((c) => {
-        console.error("catch", c)
-      });
+    try { saveMovie(newmovie); navigate("/movies"); }
+    catch (error) { window.alert(error.message); }
   };
 
   const handleTextChange = (event) => {
@@ -38,7 +30,7 @@ function MoviesNewForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(movie.rotten_tomato_score < 0 || movie.rotten_tomato_score > 101){
+    if(movie.rotten_tomato_score < 0 || movie.rotten_tomato_score > 100){
       window.confirm("Rottoen tomato score has to be between 0 to 100")
     } else {
       addMovie(movie)
@@ -98,7 +90,7 @@ function MoviesNewForm() {
             onChange={handleCheckboxChange}
             className="form-check-input" 
             />
-            <label className="form-check-label" htmlFor="has_watched">Is it Your favorite?</label>
+            <label className="form-check-label" htmlFor="has_watched">Watched</label>
           </div>
             <br></br>
           <div className="form-floating">

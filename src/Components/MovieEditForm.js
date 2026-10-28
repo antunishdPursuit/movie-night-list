@@ -1,32 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { findMovie, saveMovie } from "../movieStore";
 import { useParams, useNavigate, Link } from "react-router-dom";
-const API = process.env.REACT_APP_API_URL;
 
 function MoviesEditForm() {
   let { index } = useParams();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState({
-    title: "",
-    director: "",
-    genre: "",
-    has_watched: false,
-    rotten_tomato_score: 0,
-    release_date: "",
-    runtime: 0,
-    poster: "",
-  });
-
-  useEffect(() => {
-    axios
-      .get(`${API}/movies/${index}`)
-      .then((response) => {
-        setMovie(response.data);
-      })
-      .catch((e) => {
-        console.error(e)
-      });
-  }, [index]);
+  const [movie, setMovie] = useState(() => findMovie(index));
+  if (!movie) return <p>Movie not found. <Link to="/movies">Back to movies</Link></p>;
 
   const handleTextChange = (event) => {
     setMovie({ ...movie, [event.target.id]: event.target.value });
@@ -37,15 +17,8 @@ function MoviesEditForm() {
   }
 
   const updateMovie = () => {
-    axios
-      .put(`${API}/movies/${index}`, movie)
-      .then((response) => {
-        setMovie(response.data);
-        navigate(`/movies/${index}`);
-      })
-      .catch((c) => {
-        console.warn("catch", c)
-      });
+    try { saveMovie(movie, index); navigate("/movies/" + index); }
+    catch (error) { window.alert(error.message); }
   };
 
   const handleSubmit = (event) => {
@@ -106,7 +79,7 @@ function MoviesEditForm() {
             onChange={handleCheckboxChange}
             className="form-check-input" 
             />
-            <label className="form-check-label" htmlFor="has_watched">Is it Your favorite?</label>
+            <label className="form-check-label" htmlFor="has_watched">Watched</label>
           </div>
             <br></br>
           <div className="form-floating">
@@ -163,7 +136,7 @@ function MoviesEditForm() {
             <br></br>
           <input type="submit" />
         </form>
-          <Link to={`/transactions/${index}`}>
+          <Link to={`/movies/${index}`}>
             <button>Nevermind!</button>
           </Link>
       </div>
