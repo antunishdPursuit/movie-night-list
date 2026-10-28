@@ -33,3 +33,5 @@
  .carousel-previous { left:0; } .carousel-next { right:0; }
 }
 @media(max-width:380px) { .home-stage { height:360px; } }
+.home-poster-link { display:block; width:100%; height:100%; }
+.home-poster-link:focus-visible { outline-offset:-4px; }

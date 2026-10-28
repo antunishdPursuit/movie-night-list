@@ -10,7 +10,7 @@ function Poster({ movie }) {
   return !movie.poster || failed ? <div className="poster-fallback" role="img" aria-label={`No poster available for ${movie.title}`}><span>{movie.title}</span></div> : <img className="poster" src={movie.poster} alt={`${movie.title} poster`} onError={() => setFailed(true)} />;
 }
 function MovieCard({ movie }) {
-  return <article className="movie-card"><Link className="poster-link" to={`/movies/${movie.id}`}><Poster movie={movie} /></Link><div className="card-body"><div className="card-top"><h3><Link to={`/movies/${movie.id}`}>{movie.title}</Link></h3><span className="score" aria-label={`Score ${movie.rotten_tomato_score} out of 100`}>{movie.rotten_tomato_score}/100</span></div><p>{movie.director}</p><div className="card-meta"><span>{movie.genre}</span><span>{movie.release_date.slice(0, 4)}</span><span>{movie.runtime} min</span></div><span className="status">{movie.has_watched ? 'Watched' : 'Not watched'}</span></div></article>;
+  return <article className="movie-card"><Link className="poster-link" to={`/movies/${movie.id}`} aria-label={`View details for ${movie.title}`}><Poster movie={movie} /></Link></article>;
 }
 function Library({ movies }) {
   return <section className="page"><div className="page-heading"><div><h1>Movies</h1><p>Browse your movie list.</p></div></div>{movies.length ? <div className="movie-grid">{movies.map(movie => <MovieCard key={movie.id} movie={movie} />)}</div> : <div className="empty"><h2>No movies yet</h2><p>Use Add movie to start your list.</p></div>}</section>;
@@ -43,14 +43,10 @@ function Home({ movies }) {
         <div className="home-carousel" role="region" aria-label="Movie poster carousel" aria-roledescription="carousel">
           <div className="home-stage">
             {slides.length > 1 && <div className="home-neighbor home-neighbor-left"><HomeSlide key={slideAt(-1)?.id ?? 'original-left'} movie={slideAt(-1)} decorative /></div>}
-            <div className="home-poster" aria-live="polite" aria-atomic="true"><HomeSlide key={current?.id ?? 'original'} movie={current} /></div>
+            <div className="home-poster" aria-live="polite" aria-atomic="true">{current ? <Link className="home-poster-link" to={`/movies/${current.id}`} aria-label={`View details for ${current.title}`}><HomeSlide key={current.id} movie={current} /></Link> : <HomeSlide key="original" movie={null} />}</div>
             {slides.length > 1 && <div className="home-neighbor home-neighbor-right"><HomeSlide key={slideAt(1)?.id ?? 'original-right'} movie={slideAt(1)} decorative /></div>}
             <button className="carousel-control carousel-previous" aria-label="Previous poster" onClick={() => setPosition((currentPosition - 1 + slides.length) % slides.length)}>‹</button>
             <button className="carousel-control carousel-next" aria-label="Next poster" onClick={() => setPosition((currentPosition + 1) % slides.length)}>›</button>
-          </div>
-          <div className="home-caption" aria-live="polite" aria-atomic="true">
-            {current ? <><h2>{current.title}</h2><p>{current.director} · {current.release_date.slice(0, 4)} · {current.runtime} min</p><Link to={`/movies/${current.id}`}>View movie details</Link></> : <p>The Movies</p>}
-            <span className="home-progress">{currentPosition + 1} / {slides.length}</span>
           </div>
         </div>
       </div>
